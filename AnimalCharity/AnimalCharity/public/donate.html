@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donate - Paws of Hope</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .donate-container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .donate-container h2 {
+      text-align: center;
+      color: #e74c3c;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #bdc3c7;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    textarea { resize: vertical; height: 80px; }
+
+    .donate-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .donate-btn:hover { background-color: #c0392b; }
+
+    #response {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    #response.success { color: #27ae60; }
+    #response.error { color: #e74c3c; }
+
+    .back-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .back-link a {
+      text-decoration: none;
+      color: #3498db;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="donate-container">
+    <h2>Make a Donation 🐾</h2>
+    <form id="donationForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Your Name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Your Email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Donation Amount (₹)</label>
+        <input type="number" id="amount" placeholder="Enter Amount" required />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message (optional)</label>
+        <textarea id="message" placeholder="Your message..."></textarea>
+      </div>
+
+      <button type="submit" class="donate-btn">Donate</button>
+    </form>
+
+    <p id="response"></p>
+
+    <div class="back-link">
+      <a href="home.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("donationForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        amount: parseFloat(document.getElementById("amount").value),
+        message: document.getElementById("message").value.trim(),
+      };
+
+      const responseEl = document.getElementById("response");
+      responseEl.textContent = "Processing donation...";
+      responseEl.className = "";
+
+      try {
+        const response = await fetch("http://localhost:5000/api/donations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          responseEl.textContent = "✅ Thank you for your donation!";
+          responseEl.className = "success";
+          document.getElementById("donationForm").reset();
+        } else {
+          responseEl.textContent = "❌ " + (result.message || "Something went wrong.");
+          responseEl.className = "error";
+        }
+      } catch (error) {
+        console.error(error);
+        responseEl.textContent = "⚠️ Could not connect to server. Please try again later.";
+        responseEl.className = "error";
+      }
+    });
+  </script>
+</body>
+</html>

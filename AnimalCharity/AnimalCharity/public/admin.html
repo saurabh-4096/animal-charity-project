@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<style>
+body{font-family:Arial;background:#f5f5f5;padding:30px}
+h1{color:#2c3e50}
+table{width:100%;border-collapse:collapse;margin-bottom:40px}
+th,td{border:1px solid #ccc;padding:10px;text-align:left}
+th{background:#2c3e50;color:white}
+</style>
+</head>
+
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<h2>Contact Messages</h2>
+<table id="contactsTable">
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Message</th>
+</tr>
+</table>
+
+<h2>Donations</h2>
+<table id="donationsTable">
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Amount</th>
+<th>Message</th>
+</tr>
+</table>
+
+<script>
+
+async function loadContacts(){
+
+const res = await fetch("http://127.0.0.1:5000/api/admin/contacts");
+const data = await res.json();
+
+const table = document.getElementById("contactsTable");
+
+data.forEach(c=>{
+const row = table.insertRow();
+row.insertCell(0).innerText=c.name;
+row.insertCell(1).innerText=c.email;
+row.insertCell(2).innerText=c.message;
+});
+}
+
+async function loadDonations(){
+
+const res = await fetch("http://127.0.0.1:5000/api/admin/donations");
+const data = await res.json();
+
+const table = document.getElementById("donationsTable");
+
+data.forEach(d=>{
+const row = table.insertRow();
+row.insertCell(0).innerText=d.name;
+row.insertCell(1).innerText=d.email;
+row.insertCell(2).innerText=d.amount;
+row.insertCell(3).innerText=d.message;
+});
+}
+
+loadContacts();
+loadDonations();
+
+</script>
+
+</body>
+</html>

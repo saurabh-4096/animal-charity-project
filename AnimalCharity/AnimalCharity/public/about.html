@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Paws of Hope</title>
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f4f4f4;
+      line-height: 1.6;
+      color: #2c3e50;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #2c3e50;
+      padding: 1rem 0;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #3498db;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 1000px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .about-container {
+      background: #fff;
+      padding: 3rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    h2 {
+      color: #34495e;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 1rem;
+      text-align: justify;
+      font-size: 1rem;
+    }
+
+    .mission-box {
+      background-color: #ecf0f1;
+      padding: 1.5rem;
+      border-left: 5px solid #3498db;
+      margin: 2rem 0;
+      border-radius: 6px;
+    }
+
+    /* CALL TO ACTION */
+    .cta-section {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+    .cta-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .footer-links {
+      margin-top: 1rem;
+    }
+
+    .footer-links a {
+      color: #3498db;
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: #5dade2;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="logo">Paws of Hope</div>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="impact.html">Our Impact</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="about-container">
+      <h1>About Paws of Hope</h1>
+
+      <p>
+        Paws of Hope is a compassionate animal charity dedicated to rescuing, rehabilitating, and rehoming animals in
+        need. Since our founding, we have been a beacon of hope for countless abandoned, abused, and neglected animals
+        across the country.
+      </p>
+
+      <div class="mission-box">
+        <h2>Our Mission</h2>
+        <p>
+          To provide a safe haven for animals in distress, ensure they receive proper medical care, nourishment, and
+          rehabilitation — and find them loving forever homes where they can thrive.
+        </p>
+      </div>
+
+      <h2>What We Do</h2>
+      <p>
+        Every day, our rescue team works tirelessly to save animals from difficult and dangerous situations. From
+        providing medical aid to offering love, food, and a clean shelter — we strive to give every animal a second
+        chance at life. Volunteers, veterinarians, and kind donors together make this mission possible.
+      </p>
+
+      <h2>Our Values</h2>
+      <p>
+        Compassion, dedication, and community — these are the values that drive us. We believe that every life, no matter
+        how small, deserves respect and kindness. Our goal is to spread awareness about animal welfare and inspire people
+        to act with empathy.
+      </p>
+
+      <h2>Join Our Journey</h2>
+      <p>
+        Whether you donate, volunteer, or adopt — your contribution helps us continue this life-saving work. Together,
+        we can make the world a kinder place for all living beings.
+      </p>
+
+      <div class="cta-section">
+        <a href="donate.html" class="cta-btn">Donate Now</a>
+        <a href="contact.html" class="cta-btn" style="background-color:#3498db;">Get Involved</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Paws of Hope. All rights reserved.</p>
+    <p>Helping animals find their forever homes, one paw at a time.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </footer>
+
+  <!-- (Optional) Script for dynamic content -->
+  <script>
+    // Example: Later you can fetch team info dynamically from backend if you add a route like /api/team
+    // fetch("http://localhost:5000/api/team")
+    //   .then(res => res.json())
+    //   .then(data => console.log("Team data:", data))
+    //   .catch(err => console.error("Backend not connected yet:", err));
+  </script>
+</body>
+</html>
