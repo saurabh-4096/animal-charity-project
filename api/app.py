@@ -16,18 +16,13 @@ def home():
 def contact():
     data = request.get_json()
 
-    contact_data = {
+    contacts_collection.insert_one({
         "name": data.get("name"),
         "email": data.get("email"),
         "message": data.get("message")
-    }
-
-    contacts_collection.insert_one(contact_data)
-
-    return jsonify({
-        "success": True,
-        "message": "Contact saved successfully"
     })
+
+    return jsonify({"success": True})
 
 
 # Donation route
@@ -35,50 +30,39 @@ def contact():
 def donate():
     data = request.get_json()
 
-    donation_data = {
+    donations_collection.insert_one({
         "name": data.get("name"),
         "email": data.get("email"),
         "amount": data.get("amount"),
         "message": data.get("message")
-    }
-
-    donations_collection.insert_one(donation_data)
-
-    return jsonify({
-        "success": True,
-        "message": "Donation saved successfully"
     })
+
+    return jsonify({"success": True})
 
 
 # Login route
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
+    email = data.get("email", "")
+    password = data.get("password", "")
 
-    if email == "admin@paws.com" and password == "1234":
+    if "@" in email and password.isdigit():
         return jsonify({"success": True})
 
-    return jsonify({
-        "success": False,
-        "message": "Invalid email or password"
-    })
+    return jsonify({"success": False})
 
 
-# Admin route to get contacts
+# Admin routes
 @app.route('/api/admin/contacts', methods=['GET'])
 def get_contacts():
     contacts = list(contacts_collection.find({}, {"_id": 0}))
     return jsonify(contacts)
 
 
-# Admin route to get donations
 @app.route('/api/admin/donations', methods=['GET'])
 def get_donations():
     donations = list(donations_collection.find({}, {"_id": 0}))
     return jsonify(donations)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
