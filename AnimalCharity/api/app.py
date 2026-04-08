@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from api.config import contacts_collection, donations_collection
+from config import contacts_collection, donations_collection
 
 app = Flask(__name__)
 CORS(app)
@@ -54,7 +54,6 @@ def donate():
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
-
     email = data.get("email")
     password = data.get("password")
 
@@ -81,6 +80,5 @@ def get_donations():
     return jsonify(donations)
 
 
-# IMPORTANT for Vercel
 if __name__ == "__main__":
     app.run(debug=True)
