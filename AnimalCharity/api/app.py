@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from config import contacts_collection, donations_collection
+from api.config import contacts_collection, donations_collection
 
 app = Flask(__name__)
 CORS(app)
 
 # Home route
-@app.route('/api')
+@app.route('/api', methods=['GET'])
 def home():
     return jsonify({"message": "Server is running!"})
 
@@ -14,7 +14,7 @@ def home():
 # Contact route
 @app.route('/api/contact', methods=['POST'])
 def contact():
-    data = request.json
+    data = request.get_json()
 
     contact_data = {
         "name": data.get("name"),
@@ -33,7 +33,7 @@ def contact():
 # Donation route
 @app.route('/api/donations', methods=['POST'])
 def donate():
-    data = request.json
+    data = request.get_json()
 
     donation_data = {
         "name": data.get("name"),
@@ -53,7 +53,8 @@ def donate():
 # Login route
 @app.route('/api/login', methods=['POST'])
 def login():
-    data = request.json
+    data = request.get_json()
+
     email = data.get("email")
     password = data.get("password")
 
@@ -81,7 +82,5 @@ def get_donations():
 
 
 # IMPORTANT for Vercel
-app = app
-
 if __name__ == "__main__":
     app.run(debug=True)
