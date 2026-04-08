@@ -1,7 +1,10 @@
 from pymongo import MongoClient
+import os
 
 # MongoDB Atlas connection
-client = MongoClient("mongodb+srv://admin:animal123@cluster0.qzdofhr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+MONGO_URI = os.environ.get("MONGO_URI")
+
+client = MongoClient(MONGO_URI)
 
 # create database
 db = client["animal_charity"]
