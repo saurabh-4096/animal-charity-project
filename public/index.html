@@ -1,162 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login - Paws of Hope</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:Arial;
-background:#ecf0f1;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-.login-container{
-background:white;
-padding:2rem;
-border-radius:8px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-width:100%;
-max-width:400px;
-}
-
-.login-container h2{
-text-align:center;
-margin-bottom:20px;
-}
-
-.form-group{
-margin-bottom:15px;
-}
-
-input{
-width:100%;
-padding:10px;
-border:1px solid #ccc;
-border-radius:4px;
-}
-
-.login-btn{
-width:100%;
-padding:10px;
-background:#e74c3c;
-color:white;
-border:none;
-border-radius:4px;
-cursor:pointer;
-}
-
-.login-btn:hover{
-background:#c0392b;
-}
-
-#message{
-margin-top:15px;
-text-align:center;
-}
-
-.success{
-color:green;
-}
-
-.error{
-color:red;
-}
-
-</style>
+    <title>Admin Login</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; text-align: center; padding-top: 100px; }
+        input { padding: 10px; margin: 10px; width: 250px; }
+        button { padding: 10px 20px; }
+    </style>
 </head>
 
 <body>
 
-<div class="login-container">
-
 <h2>Admin Login</h2>
 
-<form id="loginForm">
+<input type="email" id="email" placeholder="Enter Email"><br>
+<input type="password" id="password" placeholder="Enter Password"><br>
 
-<div class="form-group">
-<input type="email" id="email" placeholder="Email" required>
-</div>
+<button onclick="login()">Login</button>
 
-<div class="form-group">
-<input type="password" id="password" placeholder="Password" required>
-</div>
-
-<button type="submit" class="login-btn">Login</button>
-
-</form>
-
-<p id="message"></p>
-
-</div>
+<p id="msg"></p>
 
 <script>
+async function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-document.getElementById("loginForm").addEventListener("submit", async function(e){
+    const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    });
 
-e.preventDefault();
+    const data = await response.json();
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-const message = document.getElementById("message");
-
-message.innerText = "Logging in...";
-
-try{
-
-const response = await fetch("/api/login", {
-
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-email:email,
-password:password
-})
-
-});
-
-const result = await response.json();
-
-if(result.success){
-
-message.innerText = "✅ Login successful";
-message.className = "success";
-
-setTimeout(()=>{
-window.location.href = "admin.html";
-},1200);
-
-}else{
-
-message.innerText = "❌ " + result.message;
-message.className = "error";
-
+    if (data.success) {
+        window.location.href = "admin.html";
+    } else {
+        document.getElementById("msg").innerText = data.message || "Login failed";
+    }
 }
-
-}catch(error){
-
-message.innerText = "⚠️ Server not running";
-message.className = "error";
-
-}
-
-});
-
 </script>
 
 </body>
