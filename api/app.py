@@ -8,56 +8,77 @@ CORS(app)
 
 # MongoDB connection
 MONGO_URI = os.environ.get("MONGO_URI")
-client = MongoClient(MONGO_URI)
-db = client["animal_charity"]
 
-contacts = db["contacts"]
-donations = db["donations"]
+if MONGO_URI:
+    client = MongoClient(MONGO_URI)
+    db = client["animal_charity"]
+    contacts = db["contacts"]
+    donations = db["donations"]
+else:
+    contacts = None
+    donations = None
 
-# Home route
-@app.route('/api', methods=['GET'])
-def home():
+
+@app.route("/")
+def root():
+    return jsonify({"message": "Flask backend is running!"})
+
+
+@app.route("/api")
+def api_home():
     return jsonify({"message": "Server is running!"})
 
-# Contact route
-@app.route('/api/contact', methods=['POST'])
+
+@app.route("/api/contact", methods=["POST"])
 def contact():
     data = request.get_json()
-    contacts.insert_one(data)
-    return jsonify({"success": True, "message": "Contact saved successfully"})
 
-# Donation route
-@app.route('/api/donations', methods=['POST'])
+    if contacts is not None:
+        contacts.insert_one(data)
+
+    return jsonify({"success": True, "message": "Contact form submitted successfully"})
+
+
+@app.route("/api/donations", methods=["POST"])
 def donate():
     data = request.get_json()
-    donations.insert_one(data)
-    return jsonify({"success": True, "message": "Donation saved successfully"})
 
-# Login route
-@app.route('/api/login', methods=['POST'])
+    if donations is not None:
+        donations.insert_one(data)
+
+    return jsonify({"success": True, "message": "Donation submitted successfully"})
+
+
+@app.route("/api/login", methods=["POST"])
 def login():
     data = request.get_json()
     email = data.get("email", "")
     password = data.get("password", "")
 
-    # Accept any email with @ and numeric password
+    # Your custom rule:
+    # Email must contain @
+    # Password must be only numbers
     if "@" in email and password.isdigit():
-        return jsonify({"success": True})
+        return jsonify({"success": True, "message": "Login successful"})
 
-    return jsonify({
-        "success": False,
-        "message": "Email must contain @ and password must be numeric only"
-    })
+    return jsonify({"success": False, "message": "Invalid email or password"})
 
-# Admin route to get contacts
-@app.route('/api/admin/contacts', methods=['GET'])
+
+@app.route("/api/admin/contacts")
 def get_contacts():
+    if contacts is None:
+        return jsonify([])
+
     return jsonify(list(contacts.find({}, {"_id": 0})))
 
-# Admin route to get donations
-@app.route('/api/admin/donations', methods=['GET'])
+
+@app.route("/api/admin/donations")
 def get_donations():
+    if donations is None:
+        return jsonify([])
+
     return jsonify(list(donations.find({}, {"_id": 0})))
 
-# Required for Vercel
-app = app
+
+if __name__ == "__main__":
+    app.run(debug=True)
