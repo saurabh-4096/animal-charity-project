@@ -55,9 +55,9 @@ def login():
     email = data.get("email", "")
     password = data.get("password", "")
 
-    # Your custom rule:
-    # Email must contain @
-    # Password must be only numbers
+    # Rule:
+    # email must contain @
+    # password must contain only numbers
     if "@" in email and password.isdigit():
         return jsonify({"success": True, "message": "Login successful"})
 
