@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us - Paws of Hope</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: "Poppins", sans-serif;
@@ -143,7 +142,7 @@
       };
 
       try {
-        const res = await fetch("/api/contact", {
+        const res = await fetch("https://animal-charity-project.onrender.com/api/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),

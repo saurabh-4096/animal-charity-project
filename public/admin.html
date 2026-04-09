@@ -26,10 +26,21 @@ th{
     background: #2c3e50;
     color: white;
 }
+.back-home{
+    margin-bottom: 20px;
+}
+.back-home a{
+    text-decoration: none;
+    color: #3498db;
+}
 </style>
 </head>
 
 <body>
+
+<div class="back-home">
+    <a href="home.html">← Back to Home</a>
+</div>
 
 <h1>Admin Dashboard</h1>
 
@@ -53,10 +64,9 @@ th{
 </table>
 
 <script>
-
 async function loadContacts() {
     try {
-        const res = await fetch("/api/admin/contacts");
+        const res = await fetch("https://animal-charity-project.onrender.com/api/admin/contacts");
         const data = await res.json();
 
         const table = document.getElementById("contactsTable");
@@ -75,7 +85,7 @@ async function loadContacts() {
 
 async function loadDonations() {
     try {
-        const res = await fetch("/api/admin/donations");
+        const res = await fetch("https://animal-charity-project.onrender.com/api/admin/donations");
         const data = await res.json();
 
         const table = document.getElementById("donationsTable");
@@ -95,7 +105,6 @@ async function loadDonations() {
 
 loadContacts();
 loadDonations();
-
 </script>
 
 </body>
