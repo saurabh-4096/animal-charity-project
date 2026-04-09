@@ -9,14 +9,14 @@ CORS(app)
 # MongoDB connection
 MONGO_URI = os.environ.get("MONGO_URI")
 
+contacts = None
+donations = None
+
 if MONGO_URI:
     client = MongoClient(MONGO_URI)
     db = client["animal_charity"]
     contacts = db["contacts"]
     donations = db["donations"]
-else:
-    contacts = None
-    donations = None
 
 
 @app.route("/")
@@ -36,7 +36,10 @@ def contact():
     if contacts is not None:
         contacts.insert_one(data)
 
-    return jsonify({"success": True, "message": "Contact form submitted successfully"})
+    return jsonify({
+        "success": True,
+        "message": "Contact form submitted successfully"
+    })
 
 
 @app.route("/api/donations", methods=["POST"])
@@ -46,7 +49,10 @@ def donate():
     if donations is not None:
         donations.insert_one(data)
 
-    return jsonify({"success": True, "message": "Donation submitted successfully"})
+    return jsonify({
+        "success": True,
+        "message": "Donation submitted successfully"
+    })
 
 
 @app.route("/api/login", methods=["POST"])
@@ -55,13 +61,19 @@ def login():
     email = data.get("email", "")
     password = data.get("password", "")
 
-    # Rule:
-    # email must contain @
-    # password must contain only numbers
+    # Login rule:
+    # Any email containing @
+    # Any password that is only numbers
     if "@" in email and password.isdigit():
-        return jsonify({"success": True, "message": "Login successful"})
+        return jsonify({
+            "success": True,
+            "message": "Login successful"
+        })
 
-    return jsonify({"success": False, "message": "Invalid email or password"})
+    return jsonify({
+        "success": False,
+        "message": "Invalid email or password"
+    })
 
 
 @app.route("/api/admin/contacts")
