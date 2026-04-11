@@ -2,36 +2,75 @@
 <html>
 <head>
 <title>Admin Dashboard</title>
+
 <style>
 body{
     font-family: Arial;
-    background: #f5f5f5;
+    background: linear-gradient(135deg,#f5f5f5,#e9ecef);
     padding: 30px;
 }
+
+/* HEADER */
 h1{
     color: #2c3e50;
+    margin-bottom: 10px;
 }
-table{
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 40px;
-    background: white;
-}
-th, td{
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-}
-th{
-    background: #2c3e50;
-    color: white;
-}
+
+/* BACK BUTTON */
 .back-home{
     margin-bottom: 20px;
 }
 .back-home a{
     text-decoration: none;
     color: #3498db;
+    font-weight: 500;
+}
+.back-home a:hover{
+    text-decoration: underline;
+}
+
+/* SECTION TITLES */
+h2{
+    margin: 20px 0 10px;
+    color: #e74c3c;
+}
+
+/* TABLE DESIGN */
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    animation: fadeIn 0.6s ease;
+}
+
+th, td{
+    padding: 12px;
+    text-align: left;
+}
+
+/* HEADER */
+th{
+    background: linear-gradient(90deg,#2c3e50,#34495e);
+    color: white;
+}
+
+/* ROWS */
+tr:nth-child(even){
+    background: #f9f9f9;
+}
+
+tr:hover{
+    background: #f1f1f1;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform: translateY(20px);}
+    to{opacity:1; transform: translateY(0);}
 }
 </style>
 </head>
