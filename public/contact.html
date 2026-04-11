@@ -4,21 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us - Paws of Hope</title>
+
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #f9f9f9;
+      background: linear-gradient(135deg, #f9f9f9, #eef2f3);
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #2c3e50;
+      background-color: rgba(44,62,80,0.95);
       color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px 60px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(6px);
+      z-index: 100;
     }
 
     header h1 {
@@ -39,16 +44,32 @@
     nav ul li a {
       color: white;
       text-decoration: none;
-      font-weight: 500;
+      position: relative;
+    }
+
+    nav ul li a::after {
+      content: '';
+      width: 0%;
+      height: 2px;
+      background: #3498db;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
     }
 
     .contact-container {
       max-width: 600px;
       background: white;
-      margin: 80px auto;
+      margin: 90px auto;
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.8s ease;
     }
 
     .contact-container h2 {
@@ -60,7 +81,7 @@
     .contact-container label {
       font-weight: 600;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .contact-container input,
@@ -70,21 +91,31 @@
       margin-bottom: 15px;
       border-radius: 6px;
       border: 1px solid #ccc;
+      transition: 0.3s;
+    }
+
+    .contact-container input:focus,
+    .contact-container textarea:focus {
+      border-color: #e74c3c;
+      outline: none;
+      box-shadow: 0 0 5px rgba(231,76,60,0.3);
     }
 
     .contact-container button {
-      background-color: #e74c3c;
+      background: linear-gradient(90deg,#e74c3c,#ff7675);
       color: white;
-      padding: 10px 20px;
+      padding: 12px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       width: 100%;
       font-size: 16px;
+      transition: 0.3s;
     }
 
     .contact-container button:hover {
-      background-color: #c0392b;
+      transform: scale(1.05);
+      background: linear-gradient(90deg,#c0392b,#ff6b6b);
     }
 
     footer {
@@ -94,8 +125,14 @@
       color: white;
       margin-top: 50px;
     }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(20px);}
+      to {opacity:1; transform: translateY(0);}
+    }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Paws of Hope</h1>
@@ -113,6 +150,7 @@
 
   <div class="contact-container">
     <h2>Contact Us 🐾</h2>
+
     <form id="contactForm">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required />
