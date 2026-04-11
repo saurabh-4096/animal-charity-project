@@ -107,14 +107,22 @@ def get_donations():
         return jsonify([])
 
 
-# ✅ NEW FEATURE: Recent Donations API
+# ✅ UPDATED: Recent Donations API (REAL DATA FROM MONGODB)
 @app.route("/api/recent-donations")
 def recent_donations():
-    return jsonify([
-        {"name": "Rahul", "amount": 500},
-        {"name": "Aisha", "amount": 1000},
-        {"name": "Rohan", "amount": 750}
-    ])
+    try:
+        if donations is not None:
+            recent = list(
+                donations.find({}, {"_id": 0})
+                .sort("_id", -1)
+                .limit(5)
+            )
+            return jsonify(recent)
+
+        return jsonify([])
+    except Exception as e:
+        print("Recent Donations Error:", e)
+        return jsonify([])
 
 
 if __name__ == "__main__":
