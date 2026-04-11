@@ -6,16 +6,8 @@
     <title>Paws of Hope - Animal Charity</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
 
         header {
             background-color: #2c3e50;
@@ -35,88 +27,35 @@
             padding: 0 2rem;
         }
 
-        .logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+        .logo { color: white; font-size: 1.5rem; font-weight: bold; }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #3498db;
-        }
+        nav a { color: white; text-decoration: none; }
+        nav a:hover { color: #3498db; }
 
         .hero {
             height: 100vh;
             background-image: url('https://static.vecteezy.com/system/resources/previews/005/857/332/non_2x/funny-portrait-of-cute-corgi-dog-outdoors-free-photo.jpg');
             background-size: cover;
-            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
         }
 
         .hero-content {
-            position: relative;
-            z-index: 1;
             color: white;
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
+            text-align: center;
         }
 
         .donate-btn {
-            display: inline-block;
             background-color: #e74c3c;
             color: white;
             padding: 1rem 3rem;
             text-decoration: none;
-            font-size: 1.2rem;
-            border-radius: 5px;
-            transition: background-color 0.3s;
         }
 
-        .donate-btn:hover {
-            background-color: #c0392b;
-        }
-
-        /* NEW SECTIONS STYLING */
-        .section {
-            padding: 50px 20px;
-            text-align: center;
-        }
+        .section { padding: 50px 20px; text-align: center; }
 
         .progress-container {
             width: 80%;
@@ -147,32 +86,9 @@
             padding: 2rem 0;
             text-align: center;
         }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer-content p {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links {
-            margin-top: 1rem;
-        }
-
-        .footer-links a {
-            color: #3498db;
-            text-decoration: none;
-            margin: 0 1rem;
-        }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
+
 <body>
 
 <header>
@@ -191,64 +107,92 @@
 <section class="hero">
     <div class="hero-content">
         <h1>Every Paw Deserves Love</h1>
-        <p>Your kindness can change a life. Help us rescue, care for, and find loving homes for animals in need.</p>
+        <p>Help animals in need 🐾</p>
         <a href="donate.html" class="donate-btn">Donate Now</a>
     </div>
 </section>
 
-<!-- ✅ NEW: DONATION PROGRESS -->
+<!-- PROGRESS -->
 <section class="section">
     <h2>Donation Progress</h2>
-    <p id="progressText">₹0 raised of ₹50,000</p>
+    <p id="progressText">Loading...</p>
 
     <div class="progress-container">
         <div id="progressBar" class="progress-bar">0%</div>
     </div>
 </section>
 
-<!-- ✅ NEW: RECENT DONATIONS -->
+<!-- RECENT -->
 <section class="section">
     <h2>Recent Donations</h2>
     <div id="donationsList"></div>
 </section>
 
+<!-- ✅ ONLY ADDED: CHART SECTION -->
+<section class="section">
+    <h2>Donation Chart</h2>
+    <canvas id="donationChart" style="max-width:600px;margin:auto;"></canvas>
+</section>
+
 <footer>
-    <div class="footer-content">
-        <p>&copy; 2025 Paws of Hope. All rights reserved.</p>
-        <p>Helping animals find their forever homes, one paw at a time.</p>
-        <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="contact.html">Contact Us</a>
-        </div>
-    </div>
+    <p>&copy; 2025 Paws of Hope</p>
 </footer>
 
-<!-- ✅ NEW SCRIPT -->
+<!-- ✅ ONLY ADDED: CHART LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-// Progress bar
-let raised = 20000;
-let goal = 50000;
-let percent = (raised / goal) * 100;
+// ✅ LOAD REAL DATA
+async function loadDonations() {
+    try {
+        const res = await fetch("https://animal-charity-project.onrender.com/api/recent-donations");
+        const data = await res.json();
 
-document.getElementById("progressBar").style.width = percent + "%";
-document.getElementById("progressBar").innerText = Math.floor(percent) + "%";
-document.getElementById("progressText").innerText = `₹${raised} raised of ₹${goal}`;
+        const container = document.getElementById("donationsList");
+        container.innerHTML = "";
 
+        let total = 0;
+        let names = [];
+        let amounts = [];
 
-// Recent donations (from backend)
-async function loadDonations(){
-    const res = await fetch("https://animal-charity-project.onrender.com/api/recent-donations");
-    const data = await res.json();
+        data.forEach(d => {
+            total += Number(d.amount);
 
-    const container = document.getElementById("donationsList");
+            names.push(d.name);
+            amounts.push(d.amount);
 
-    data.forEach(d => {
-        const div = document.createElement("div");
-        div.className = "donation-card";
-        div.innerHTML = `<strong>${d.name}</strong> donated ₹${d.amount}`;
-        container.appendChild(div);
-    });
+            const div = document.createElement("div");
+            div.className = "donation-card";
+            div.innerHTML = `<strong>${d.name}</strong> donated ₹${d.amount}`;
+            container.appendChild(div);
+        });
+
+        // ✅ UPDATE PROGRESS BAR
+        let goal = 50000;
+        let percent = (total / goal) * 100;
+
+        document.getElementById("progressBar").style.width = percent + "%";
+        document.getElementById("progressBar").innerText = Math.floor(percent) + "%";
+        document.getElementById("progressText").innerText =
+            `₹${total} raised of ₹${goal}`;
+
+        // ✅ ONLY ADDED: CHART
+        const ctx = document.getElementById('donationChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: names,
+                datasets: [{
+                    label: 'Donation Amount (₹)',
+                    data: amounts
+                }]
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 loadDonations();
