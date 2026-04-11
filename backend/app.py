@@ -107,5 +107,15 @@ def get_donations():
         return jsonify([])
 
 
+# ✅ NEW FEATURE: Recent Donations API
+@app.route("/api/recent-donations")
+def recent_donations():
+    return jsonify([
+        {"name": "Rahul", "amount": 500},
+        {"name": "Aisha", "amount": 1000},
+        {"name": "Rohan", "amount": 750}
+    ])
+
+
 if __name__ == "__main__":
     app.run()
