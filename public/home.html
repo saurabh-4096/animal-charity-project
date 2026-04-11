@@ -34,8 +34,10 @@
         nav a { color: white; text-decoration: none; }
         nav a:hover { color: #3498db; }
 
+        /* ✅ FIX: spacing below fixed navbar */
         .hero {
             height: 100vh;
+            margin-top: 70px;
             background-image: url('https://static.vecteezy.com/system/resources/previews/005/857/332/non_2x/funny-portrait-of-cute-corgi-dog-outdoors-free-photo.jpg');
             background-size: cover;
             display: flex;
@@ -55,7 +57,10 @@
             text-decoration: none;
         }
 
-        .section { padding: 50px 20px; text-align: center; }
+        .section { 
+            padding: 50px 20px; 
+            text-align: center; 
+        }
 
         .progress-container {
             width: 80%;
@@ -78,6 +83,11 @@
             padding: 10px;
             width: 60%;
             border-radius: 6px;
+        }
+
+        /* ✅ FIX: chart clean alignment */
+        #donationChart {
+            margin-top: 30px;
         }
 
         footer {
@@ -128,7 +138,7 @@
     <div id="donationsList"></div>
 </section>
 
-<!-- ✅ ONLY ADDED: CHART SECTION -->
+<!-- CHART -->
 <section class="section">
     <h2>Donation Chart</h2>
     <canvas id="donationChart" style="max-width:600px;margin:auto;"></canvas>
@@ -138,11 +148,9 @@
     <p>&copy; 2025 Paws of Hope</p>
 </footer>
 
-<!-- ✅ ONLY ADDED: CHART LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// ✅ LOAD REAL DATA
 async function loadDonations() {
     try {
         const res = await fetch("https://animal-charity-project.onrender.com/api/recent-donations");
@@ -157,7 +165,6 @@ async function loadDonations() {
 
         data.forEach(d => {
             total += Number(d.amount);
-
             names.push(d.name);
             amounts.push(d.amount);
 
@@ -167,7 +174,6 @@ async function loadDonations() {
             container.appendChild(div);
         });
 
-        // ✅ UPDATE PROGRESS BAR
         let goal = 50000;
         let percent = (total / goal) * 100;
 
@@ -176,7 +182,6 @@ async function loadDonations() {
         document.getElementById("progressText").innerText =
             `₹${total} raised of ₹${goal}`;
 
-        // ✅ ONLY ADDED: CHART
         const ctx = document.getElementById('donationChart').getContext('2d');
 
         new Chart(ctx, {
