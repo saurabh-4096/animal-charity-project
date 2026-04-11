@@ -32,16 +32,30 @@ def home():
     return jsonify({"message": "Backend is running!"})
 
 
+# ✅ ONLY THIS PART CHANGED (REAL LOGIN USING MONGODB)
 @app.route("/api/login", methods=["POST"])
 def login():
-    data = request.get_json()
-    email = data.get("email", "")
-    password = data.get("password", "")
+    try:
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
 
-    if "@" in email and password.isdigit():
-        return jsonify({"success": True})
+        if db is None:
+            return jsonify({"success": False})
 
-    return jsonify({"success": False})
+        user = db["users"].find_one({
+            "email": email,
+            "password": password
+        })
+
+        if user:
+            return jsonify({"success": True})
+        else:
+            return jsonify({"success": False})
+
+    except Exception as e:
+        print("Login Error:", e)
+        return jsonify({"success": False})
 
 
 @app.route("/api/contact", methods=["POST"])
